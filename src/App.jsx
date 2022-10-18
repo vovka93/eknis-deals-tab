@@ -147,6 +147,12 @@ function App() {
   const [stages, setStages] = useState([]);
 
   useEffect(() => {
+    if ((window).BX24) {
+      (window).BX24.fitWindow();
+    }
+  });
+
+  useEffect(() => {
     BX24.callMethod('profile', {}, (res) => {
       setUser(res.data());
     });
