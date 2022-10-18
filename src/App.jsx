@@ -222,7 +222,7 @@ function App() {
   return (
     <>
       <Typography variant="h6" gutterBottom>Пов'язані угоди</Typography>
-      <Box sx={{ height: 584, width: '100%' }}>
+      <Box sx={{ height: '1024px', width: '100%' }}>
         {categories.length && deals.length && users ? <Datatable data={deals} {...{ categories }} {...{ stages }} users={users} /> : <Typography>Не знайдено</Typography>}
       </Box>
     </>

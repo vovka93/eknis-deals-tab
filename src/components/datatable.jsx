@@ -93,8 +93,8 @@ export default (props) => {
     { columnName: 'ID', width: 190 },
     { columnName: 'TITLE', width: 400 },
     { columnName: 'STAGE_ID', width: 200 },
-    { columnName: 'OPPORTUNITY', width: 100 },
-    { columnName: 'UF_CRM_1644916042', width: 190 },
+    { columnName: 'OPPORTUNITY', width: 190 },
+    { columnName: 'UF_CRM_1644916042', width: 170 },
     { columnName: 'ASSIGNED_BY_ID', width: 200 },
   ]);
 
