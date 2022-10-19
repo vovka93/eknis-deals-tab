@@ -2,7 +2,9 @@
   cursor: pointer;
 }
 
-.TableCell-cell {
+.TableCell-cell {}
+
+.TableTreeCell-container {
   white-space: normal !important;
   word-wrap: break-word !important;
 }

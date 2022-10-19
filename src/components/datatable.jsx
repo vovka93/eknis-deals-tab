@@ -30,7 +30,8 @@ const STAGE_IDProvider = props => (
 const OPPORTUNITYProvider = props => (
   <DataTypeProvider
     formatterComponent={({ value }) => {
-      return value + ' UAH';
+      let x = value || 0;
+      return String(x) + ' UAH';
     }}
     {...props}
   />
@@ -70,13 +71,28 @@ const Cell = (props) => {
   return <Table.Cell {...props} />;
 };
 
+String.prototype.escapeHTML = function () {
+  return this.replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 export default (props) => {
   const [columns] = useState([
-    { name: 'ID', title: 'ID' },
-    { name: 'TITLE', title: 'Назва' },
-    { name: 'STAGE_ID', title: 'Статус' },
+    // { name: 'ID', title: 'ID' },
+    {
+      name: 'TITLE', title: 'Назва', getCellValue: row => {
+        if (row['CLOSED'] == 'Y') {
+          return '<s>' + row.TITLE + '</s>';
+        }
+        return row.TITLE;
+      }
+    },
     { name: 'OPPORTUNITY', title: 'Сума' },
     { name: 'UF_CRM_1644916042', title: '% здійснених оплат' },
+    { name: 'STAGE_ID', title: 'Статус' },
     {
       name: 'ASSIGNED_BY_ID', title: 'Відповідальний',
       getCellValue: row => {
@@ -90,11 +106,11 @@ export default (props) => {
     },
   ]);
   const [tableColumnExtensions] = useState([
-    { columnName: 'ID', width: 190 },
-    { columnName: 'TITLE', width: 400 },
-    { columnName: 'STAGE_ID', width: 200 },
+    // { columnName: 'ID', width: 190 },
+    { columnName: 'TITLE', width: 600 },
     { columnName: 'OPPORTUNITY', width: 190 },
     { columnName: 'UF_CRM_1644916042', width: 170 },
+    { columnName: 'STAGE_ID', width: 200 },
     { columnName: 'ASSIGNED_BY_ID', width: 200 },
   ]);
 
@@ -143,15 +159,19 @@ export default (props) => {
             />
             <Table
               columnExtensions={tableColumnExtensions}
-              cellComponent={Cell}
+
               rowComponent={TableRow}
             />
             <TableHeaderRow />
             <TableTreeColumn
-              for="ID"
+              for="TITLE"
+              contentComponent={({ children }) => {
+                return <><div dangerouslySetInnerHTML={{ __html: children }}></div></>
+              }}
             />
           </Grid>
         </Paper></>
-    ))}</>
+    ))
+    }</>
   );
 };
