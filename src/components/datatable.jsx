@@ -107,7 +107,7 @@ export default (props) => {
   ]);
   const [tableColumnExtensions] = useState([
     // { columnName: 'ID', width: 190 },
-    { columnName: 'TITLE', width: 600 },
+    { columnName: 'TITLE', wordWrapEnabled: true },
     { columnName: 'OPPORTUNITY', width: 190 },
     { columnName: 'UF_CRM_1644916042', width: 170 },
     { columnName: 'STAGE_ID', width: 200 },
@@ -142,6 +142,7 @@ export default (props) => {
           <Grid
             rows={val}
             columns={columns}
+            width={"100%"}
           >
             <TreeDataState expandedRowIds={[...Array(50).keys()]} />
             <CustomTreeData
@@ -159,7 +160,7 @@ export default (props) => {
             />
             <Table
               columnExtensions={tableColumnExtensions}
-
+              width="100%"
               rowComponent={TableRow}
             />
             <TableHeaderRow />
