@@ -132,19 +132,32 @@ export default (props) => {
     setCats(c);
   }, []);
 
+  let outCats = [];
+
+  Object.entries(cats).map(([name, rows]) => {
+    outCats.push({
+      name, rows
+    });
+  });
+
+  outCats.sort(function (a, b) {
+    if (a.name == 'ЗАКУПІВЛІ') return -1;
+    return 0;
+  });
+
   return (<>
-    {Object.entries(cats).map(([cat, val], i) => (
+    {outCats.map((cat, i) => (
       <>
         <Box mt={1}>
-          <Typography>{cat}</Typography>
+          <Typography>{cat.name}</Typography>
         </Box>
         <Paper>
           <Grid
-            rows={val}
+            rows={cat.rows}
             columns={columns}
             width={"100%"}
           >
-            <TreeDataState expandedRowIds={[...Array(50).keys()]} />
+            <TreeDataState expandedRowIds={[...Array(99999).keys()]} />
             <CustomTreeData
               getChildRows={getChildRows}
             />
@@ -163,7 +176,7 @@ export default (props) => {
               width="100%"
               rowComponent={TableRow}
             />
-            <TableHeaderRow />
+            {!i && <TableHeaderRow />}
             <TableTreeColumn
               for="TITLE"
               contentComponent={({ children }) => {
