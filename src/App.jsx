@@ -98,7 +98,7 @@ const openInNewTab = url => {
 
 function loadItems(deal) {
   return new Promise(async (resolve, reject) => {
-    let ids = [...deal.UF_CRM_1616671647, ...deal.UF_CRM_1625041137];
+    let ids = [...deal.UF_CRM_1616671647 || [], ...deal.UF_CRM_1625041137 || []];
     if (ids && ids.length) {
       getDealList(ids).then(async list => {
         resolve(await Promise.all(list.map(async (deal) => {
