@@ -49,6 +49,7 @@ var BX24 = window.BX24 || {
 }
 
 function getDealList(ids) {
+  ids = ids.map(id => id.replace('D_', ''));
   return new Promise((resolve, reject) => {
     BX24.callMethod('crm.deal.list', {
       filter:
