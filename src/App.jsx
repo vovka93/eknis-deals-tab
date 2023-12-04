@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Box, Typography } from '@mui/material';
 import './App.css'
 import Datatable from './components/datatable';
-import JSONPretty from 'react-json-pretty';
 
 var nPageSize = 50;
 var select = ['ID', 'TITLE', 'OPPORTUNITY', 'ASSIGNED_BY_ID', 'UF_CRM_1616671647', 'UF_CRM_1625039793', 'UF_CRM_1625041137', 'UF_CRM_1616674593', 'STAGE_ID', "CATEGORY_ID", 'CLOSED', 'CURRENCY_ID', 'UF_CRM_1644916042'];
@@ -50,6 +49,7 @@ var BX24 = window.BX24 || {
 
 function getDealList(ids) {
   ids = ids.map(id => id.replace('D_', ''));
+  let dealList = [];
   return new Promise((resolve, reject) => {
     BX24.callMethod('crm.deal.list', {
       filter:
@@ -60,8 +60,14 @@ function getDealList(ids) {
     }, res => {
       if (res.error())
         reject(res.error());
-      else
-        resolve(res.data());
+      else {
+        dealList = [...dealList, ...res.data()];
+        if (res.more()) {
+          res.next();
+        } else {
+          resolve(dealList);
+        }
+      }
     });
   });
 }
